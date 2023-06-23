@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-rsschool",
+  "version": "1.0.0",
+  "description": "file-manager project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "IrinaIID",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
