@@ -1,32 +1,55 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Transform } from 'stream';
-import { pipeline } from 'stream/promises';
+import * as readline from 'node:readline';
+import { handleUserName } from './handleUserName.js';
+import { handleUp } from './nwd/up.js';
+// import { Transform } from 'stream';
+// import { pipeline } from 'stream/promises';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const { stdin, stdout } = process;
 
-let userName;
-const args = process.argv.slice(2);
-args.forEach(arg => {
-  if ( arg.includes('--username=') ) {
-    console.log(arg)
-    userName = arg.replace('--username=', '');
-  } else {
-    console.log('Please start app with correct typping user name, format  -- --username=your_username');
-    process.exit();
+function logDir() {
+  console.log(`You are currently in ${__dirname}`);
+}
+
+
+console.log(`Welcome to the File Manager, ${handleUserName()}!`);
+logDir();
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+let inputData;
+
+rl.on('line', (input) => {
+  console.log(`Received: ${input}`);
+  inputData = input.toString().trim();
+
+  switch (inputData.slice(0,2)) {
+    case 'up':
+      handleUp();
+      break;
+    case 'cd':
+      handleCd(inputData);
+      break;
+    default:
+      console.log( "Нет таких значений" );
   }
 });
 
-console.log(`Welcome to the File Manager, ${userName}!`)
 
-console.log(args)
 
-stdin.on('data', (data) => {
-  if (data === '.exit') {process.exit()};
-})
+
+// stdin.on("data", data => {
+//   if ( data.toString().trim() === '.exit' ) {
+//     console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
+//     process.exit()
+//   }
+// });
 
 // const transform = new Transform({
 //   transform(data, encoding, callback) {
@@ -39,6 +62,6 @@ stdin.on('data', (data) => {
 
 // process.on('exit', () => console.log(`Thank you for using File Manager, Username, goodbye!`));
 process.on('SIGINT', (data) => {
-  console.log(`Thank you for using File Manager, Username, goodbye!`);
+  console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
   process.exit();
 });

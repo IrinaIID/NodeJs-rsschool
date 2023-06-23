@@ -9,8 +9,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "IrinaIID",
-  "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.22"
-  }
+  "license": "ISC"
 }
