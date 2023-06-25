@@ -6,6 +6,7 @@ import { handleUp } from './nwd/up.js';
 import { handleCd } from './nwd/cd.js';
 import { handleLs } from './nwd/ls.js';
 import { handleCat } from './bowf/cat.js';
+import { handleAdd } from './bowf/add.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
 
@@ -52,7 +53,7 @@ rl.on('line', (input) => {
       handleCat(inputData);
       break;
     case 'add':
-      
+      handleAdd(inputData);
       break;
     default:
       console.log( "Нет таких значений" );

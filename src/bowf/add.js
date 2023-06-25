@@ -1,22 +1,18 @@
 import fs from 'fs';
-import { cwd, stdout } from 'node:process';
+import { cwd } from 'node:process';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-async function handleAdd(inputData) {
+function handleAdd(inputData) {
   try {
-    const pathData = inputData.slice(3).trim();
-    const readebleStream = fs.createReadStream(path.resolve(cwd().toString(), pathData.toString()), 'utf-8');
-    readebleStream.on('data', chunk => {
-      stdout.write(chunk);
-      console.log(`\nYou are currently in ${cwd()}`);
+    const nameFile = inputData.slice(3).trim();
+    console.log(nameFile)
+    fs.writeFile(path.resolve(path.resolve(cwd().toString(), nameFile)), '', (err) => {
+      if (err) console.log(err);
     });
+    console.log(`You are currently in ${cwd()}`);
   } catch (err) {
-    console.error(`cat: ${err}`);
+    console.error(`add: ${err}`);
   }
 }
 
-export { handleCat }
+export { handleAdd }
