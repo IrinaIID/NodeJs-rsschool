@@ -5,6 +5,7 @@ import { handleUserName } from './handleUserName.js';
 import { handleUp } from './nwd/up.js';
 import { handleCd } from './nwd/cd.js';
 import { handleLs } from './nwd/ls.js';
+import { handleCat } from './bowf/cat.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
 
@@ -37,7 +38,7 @@ rl.on('line', (input) => {
 
   inputData = input.toString().trim();
 
-  switch (inputData.slice(0,2)) {
+  switch (inputData.slice(0,3).trim()) {
     case 'up':
       handleUp();
       break;
@@ -46,6 +47,12 @@ rl.on('line', (input) => {
       break;
     case 'ls':
       handleLs();
+      break;
+    case 'cat':
+      handleCat(inputData);
+      break;
+    case 'add':
+      
       break;
     default:
       console.log( "Нет таких значений" );
