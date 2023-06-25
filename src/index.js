@@ -3,6 +3,9 @@ import { fileURLToPath } from 'url';
 import * as readline from 'node:readline';
 import { handleUserName } from './handleUserName.js';
 import { handleUp } from './nwd/up.js';
+import { handleCd } from './nwd/cd.js';
+import { on } from 'events';
+import { handleLs } from './nwd/ls.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
 
@@ -11,7 +14,7 @@ const __dirname = path.dirname(__filename);
 const { stdin, stdout } = process;
 
 function logDir() {
-  console.log(`You are currently in ${__dirname}`);
+  console.log(`You are currently in ${process.cwd()}`);
 }
 
 
@@ -27,6 +30,12 @@ let inputData;
 
 rl.on('line', (input) => {
   console.log(`Received: ${input}`);
+
+  if ( input === '.exit' ) {
+    console.log(`Thank you for using File Manager, ${handleUserName()}, goodbye!`);
+    process.exit();
+  }
+
   inputData = input.toString().trim();
 
   switch (inputData.slice(0,2)) {
@@ -36,12 +45,18 @@ rl.on('line', (input) => {
     case 'cd':
       handleCd(inputData);
       break;
+    case 'ls':
+      handleLs();
+      break;
     default:
       console.log( "Нет таких значений" );
   }
 });
 
-
+rl.on('close', () => {
+  console.log(`Thank you for using File Manager, ${handleUserName()}, goodbye!`);
+  process.exit();
+});
 
 
 // stdin.on("data", data => {
@@ -61,7 +76,8 @@ rl.on('line', (input) => {
 // pipeline(stdin, transform, stdout);
 
 // process.on('exit', () => console.log(`Thank you for using File Manager, Username, goodbye!`));
-process.on('SIGINT', (data) => {
-  console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
-  process.exit();
-});
+// process.on('SIGINT', (data) => {
+//   console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
+//   process.exit();
+// });
+
