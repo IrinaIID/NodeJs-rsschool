@@ -1,14 +1,27 @@
-import fs from 'fs';
-import path from 'path';
-// import { fileURLToPath } from 'url';
+import fs from 'fs/promises';
+import { cwd } from 'process';
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
-function handleLs() {
+async function handleLs() {
+  try {
+    const dirs = [];
+    const files = [];
+    const contentDir = await fs.readdir(cwd(), {withFileTypes: true});
 
-  console.log(process.cwd())
+    contentDir.forEach(item => {
+      if ( item.isDirectory() ) {
+        dirs.push({Name: item.name, Type: 'directory'});
+      } else {
+        files.push({Name: item.name, Type: 'file'});
+      }
+    });
 
+    console.table([...dirs.sort(), ...files.sort()]);
+    console.log(`You are currently in ${cwd()}`);
+
+  } catch (err) {
+    console.error(`handleLs: ${err}`);
+  }
 }
 
 export { handleLs }

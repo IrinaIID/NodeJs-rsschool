@@ -4,7 +4,6 @@ import * as readline from 'node:readline';
 import { handleUserName } from './handleUserName.js';
 import { handleUp } from './nwd/up.js';
 import { handleCd } from './nwd/cd.js';
-import { on } from 'events';
 import { handleLs } from './nwd/ls.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
@@ -29,7 +28,7 @@ const rl = readline.createInterface({
 let inputData;
 
 rl.on('line', (input) => {
-  console.log(`Received: ${input}`);
+  console.log(`Received: ${input}`); //need to remove after ending work
 
   if ( input === '.exit' ) {
     console.log(`Thank you for using File Manager, ${handleUserName()}, goodbye!`);

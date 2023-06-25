@@ -6,7 +6,7 @@ function handleCd(inputData) {
 
   try {
     const pathData = inputData.slice(2).trim();
-    chdir(path.resolve(process.cwd().toString(), pathData.toString()));
+    chdir(path.resolve(cwd().toString(), pathData.toString()));
     console.log(`You are currently in ${cwd()}`);
   } catch (err) {
     console.error(`chdir: ${err}`);
