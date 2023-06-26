@@ -13,6 +13,7 @@ import { handleOs } from './osi/os.js';
 import { handleHash } from './hash/hash.js';
 import { handleAllValues } from './handleAllValues.js';
 import { handleCompress } from './cdo/compress.js';
+import { handleDecompress } from './cdo/decompress.js';
 
 
 function logDir() {
@@ -75,6 +76,9 @@ rl.on('line', (input) => {
       break;
     case 'com':
       handleCompress(inputData);
+      break;
+    case 'dec':
+      handleDecompress(inputData);
       break;
     default:
       handleAllValues();
