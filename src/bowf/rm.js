@@ -10,7 +10,7 @@ export function handleRm(inputData) {
         console.log('unvalid path to file');
       } else {
         fs.unlink(pathData, err => {
-          if(err) throw err;
+          if(err) console.error(err);
         });
       }
     });
