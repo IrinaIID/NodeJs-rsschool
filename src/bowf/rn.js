@@ -8,12 +8,10 @@ export function handleRn(inputData) {
     const arrData = data.split(' ');
     const pathData = path.resolve(cwd().toString(), arrData[0]);
 
-    const pathDestArr = pathData.split('\\')
-    const pathDest = pathDestArr.splice(pathDestArr[pathDestArr.length - 1], 1, arrData[1] ).join('\\');
-    console.log(arrData[0]);
-    console.log(arrData[1]);
-    console.log(pathData)
-    console.log(pathDest);
+    const oldName = arrData[0].split('/').at(-1);
+    const newName = arrData[1].split('/').at(-1);
+
+    const pathDest = pathData.replace(oldName, newName)
 
     fs.rename(
       pathData,

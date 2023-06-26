@@ -15,7 +15,15 @@ export function handleCp(inputData) {
     //   }
     // });
     const readebleStream = fs.createReadStream(pathData, 'utf-8');
+    readebleStream.on('error', err => {
+      console.log('error with path_to_file', err.message);
+      return
+    });
     const writebleStream = fs.createWriteStream(pathDest);
+    writebleStream.on('error', err => {
+      console.log('error with path_to_destination', err.message);
+      return
+    });
 
     readebleStream.on('data', chunk => writebleStream.write(chunk));
 
