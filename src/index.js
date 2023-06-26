@@ -12,6 +12,7 @@ import { handleCp } from './bowf/cp.js';
 import { handleMv } from './bowf/mv.js';
 import { handleRm } from './bowf/rm.js';
 import { handleOs } from './osi/os.js';
+import { handleHash } from './hash/hash.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
 
@@ -74,6 +75,9 @@ rl.on('line', (input) => {
       break;
     case 'os':
       handleOs(inputData);
+      break;
+    case 'has':
+      handleHash(inputData);
       break;
     default:
       console.log('\x1b[36m%s\x1b[0m', `There is no value entered. Possible options:
