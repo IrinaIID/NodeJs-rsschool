@@ -2,10 +2,10 @@ import fs from 'fs';
 import { cwd } from 'node:process';
 import path from 'path';
 
+
 function handleAdd(inputData) {
   try {
     const nameFile = inputData.slice(3).trim();
-    console.log(nameFile)
     fs.writeFile(path.resolve(path.resolve(cwd().toString(), nameFile)), '', (err) => {
       if (err) console.log(err);
     });

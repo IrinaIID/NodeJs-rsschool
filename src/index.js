@@ -7,6 +7,8 @@ import { handleCd } from './nwd/cd.js';
 import { handleLs } from './nwd/ls.js';
 import { handleCat } from './bowf/cat.js';
 import { handleAdd } from './bowf/add.js';
+import { handleRn } from './bowf/rn.js';
+import { handleCp } from './bowf/cp.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
 
@@ -54,6 +56,12 @@ rl.on('line', (input) => {
       break;
     case 'add':
       handleAdd(inputData);
+      break;
+    case 'rn':
+      handleRn(inputData);
+      break;
+    case 'cp':
+      handleCp(inputData);
       break;
     default:
       console.log( "Нет таких значений" );
