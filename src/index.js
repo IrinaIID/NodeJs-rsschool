@@ -31,8 +31,6 @@ const rl = readline.createInterface({
 let inputData;
 
 rl.on('line', (input) => {
-  console.log(`Received: ${input}`); //need to remove after ending work
-
   if ( input === '.exit' ) {
     console.log('\x1b[36m%s\x1b[0m', `Thank you for using File Manager, ${handleUserName()}, goodbye!`);
     process.exit();
