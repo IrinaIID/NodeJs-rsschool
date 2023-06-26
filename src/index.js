@@ -9,6 +9,8 @@ import { handleCat } from './bowf/cat.js';
 import { handleAdd } from './bowf/add.js';
 import { handleRn } from './bowf/rn.js';
 import { handleCp } from './bowf/cp.js';
+import { handleMv } from './bowf/mv.js';
+import { handleRm } from './bowf/rm.js';
 // import { Transform } from 'stream';
 // import { pipeline } from 'stream/promises';
 
@@ -62,6 +64,12 @@ rl.on('line', (input) => {
       break;
     case 'cp':
       handleCp(inputData);
+      break;
+    case 'mv':
+      handleMv(inputData);
+      break;
+    case 'rm':
+      handleRm(inputData);
       break;
     default:
       console.log( "Нет таких значений" );
