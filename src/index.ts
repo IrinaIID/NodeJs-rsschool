@@ -2,6 +2,7 @@ import "dotenv/config";
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { usersBase } from "./modules/infoBase";
 import { validate as isValidUUID } from 'uuid';
+// import { IUser, IUserPOST } from "./interfaces/interfaces";
 
 
 const port = process.env.PORT;
@@ -31,34 +32,40 @@ const server = createServer((request: IncomingMessage, response: ServerResponse)
       }
       break;
 
+    case 'POST':
+      if(arrUrl?.length == 2 && arrUrl[1] === 'users') {
+        request.on('data', function(data) {
+            usersBase.addUser(data);
+
+        })
+        request.on('end', function() {
+          response.writeHead(200, {'Content-Type': 'text/html'})
+          response.end('post received')
+        })
+
+      } else {
+        response.statusCode = 404;
+        response.end('non-existing endpoints for POST request');
+      }
+      break;
+
     default:
       response.statusCode = 404;
       response.end();
       break;
   }
 
-
-
-  // switch (request.url) {
-  //   case '/users': {
-  //     if (request.method === 'GET') {
-  //       response.end(JSON.stringify(usersBase.getUsers()));
-  //       // response.statusCode = 200;
-  //     }
-  //     break;
-  //   }
-  //   case '/users': {
-  //     if (request.method === 'GET') {
-  //       response.end(JSON.stringify(usersBase.getUsers()));
-  //     }
-  //     break;
-  //   }
-  //   default: {
-  //     response.statusCode = 404;
-  //     response.end();
-  //   }
-  // }
 });
+
+
+// function isCorrectDataPOST(data: IUserPOST) {
+//   if (typeof data.username === 'string' && typeof data.age === 'number' && Array.isArray(data.hobbies)) {
+//     return true
+//   } else {
+//     return false;
+//   }
+// }
+
 
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
