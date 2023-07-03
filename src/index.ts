@@ -1,40 +1,63 @@
 import "dotenv/config";
-import { v4 as uuidv4 } from 'uuid';
-// import config from "./config.js";
-// console.log(config.port);
 import { createServer, IncomingMessage, ServerResponse } from 'http';
+import { usersBase } from "./modules/infoBase";
+import { validate as isValidUUID } from 'uuid';
 
-
-interface IUser {
-  id: string
-  username: string
-  age: number
-  hobbies: string[] | []
-}
-
-const users: IUser[] = [
-  {
-    id: uuidv4(),
-    username: 'Anna',
-    age: 23,
-    hobbies: []
-  }
-];
 
 const port = process.env.PORT;
+
 const server = createServer((request: IncomingMessage, response: ServerResponse) => {
-  switch (request.url) {
-    case '/users': {
-      if (request.method === 'GET') {
-        response.end(JSON.stringify(users));
+
+  const url = request.url;
+  const arrUrl = url?.split('/');
+
+  switch (request.method) {
+    case 'GET':
+      if (arrUrl?.length == 2 && arrUrl[1] === 'users') {
+        response.statusCode = 200;
+        response.end(JSON.stringify(usersBase.getUsers()));
+      } else if (arrUrl?.length == 3 && !isValidUUID(arrUrl[2])) {
+        response.statusCode = 400;
+        response.end('userId in URL is invalid (not uuid)');
+      } else if (arrUrl?.length == 3 && usersBase.getCertainUser(arrUrl[2]).length === 0) {
+        response.statusCode = 404;
+        response.end("userId doesn't exist");
+      } else if (arrUrl?.length == 3 && usersBase.getCertainUser(arrUrl[2])) {
+        response.statusCode = 200;
+        response.end(JSON.stringify(usersBase.getCertainUser(arrUrl[2])));
+      } else {
+        response.statusCode = 404;
+        response.end();
       }
       break;
-    }
-    default: {
+
+    default:
       response.statusCode = 404;
       response.end();
-    }
+      break;
   }
+
+
+
+  // switch (request.url) {
+  //   case '/users': {
+  //     if (request.method === 'GET') {
+  //       response.end(JSON.stringify(usersBase.getUsers()));
+  //       // response.statusCode = 200;
+  //     }
+  //     break;
+  //   }
+  //   case '/users': {
+  //     if (request.method === 'GET') {
+  //       response.end(JSON.stringify(usersBase.getUsers()));
+  //     }
+  //     break;
+  //   }
+  //   default: {
+  //     response.statusCode = 404;
+  //     response.end();
+  //   }
+  // }
 });
 
 server.listen(port, () => {
