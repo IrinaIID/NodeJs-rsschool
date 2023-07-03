@@ -16,18 +16,18 @@ const server = createServer((request: IncomingMessage, response: ServerResponse)
       if (arrUrl?.length == 2 && arrUrl[1] === 'users') {
         response.statusCode = 200;
         response.end(JSON.stringify(usersBase.getUsers()));
-      } else if (arrUrl?.length == 3 && !isValidUUID(arrUrl[2])) {
+      } else if (arrUrl?.length == 3 && arrUrl[1] === 'users' && !isValidUUID(arrUrl[2])) {
         response.statusCode = 400;
         response.end('userId in URL is invalid (not uuid)');
-      } else if (arrUrl?.length == 3 && usersBase.getCertainUser(arrUrl[2]).length === 0) {
+      } else if (arrUrl?.length == 3 && arrUrl[1] === 'users' && usersBase.getCertainUser(arrUrl[2]).length === 0) {
         response.statusCode = 404;
         response.end("userId doesn't exist");
-      } else if (arrUrl?.length == 3 && usersBase.getCertainUser(arrUrl[2])) {
+      } else if (arrUrl?.length == 3 && arrUrl[1] === 'users' && usersBase.getCertainUser(arrUrl[2])) {
         response.statusCode = 200;
         response.end(JSON.stringify(usersBase.getCertainUser(arrUrl[2])));
       } else {
         response.statusCode = 404;
-        response.end();
+        response.end('non-existing endpoints for GET request');
       }
       break;
 
